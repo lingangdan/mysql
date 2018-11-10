@@ -1,0 +1,315 @@
+mysql> use jin40;
+Database changed
+mysql> select * from countries;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| AU         | Australia                | 3         |
+| BE         | Belgium                  | 1         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| CH         | Switzerland              | 1         |
+| CN         | China                    | 3         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| EG         | Egypt                    | 4         |
+| FR         | France                   | 1         |
+| IL         | Israel                   | 4         |
+| IN         | India                    | 3         |
+| IT         | Italy                    | 1         |
+| JP         | Japan                    | 3         |
+| KW         | Kuwait                   | 4         |
+| ML         | Malaysia                 | 3         |
+| MX         | Mexico                   | 2         |
+| NG         | Nigeria                  | 4         |
+| NL         | Netherlands              | 1         |
+| SG         | Singapore                | 3         |
+| UK         | United Kingdom           | 1         |
+| US         | United States of America | 2         |
+| ZM         | Zambia                   | 4         |
+| ZW         | Zimbabwe                 | 4         |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select distinct country_name from countries;
++--------------------------+
+| country_name             |
++--------------------------+
+| Argentina                |
+| Australia                |
+| Belgium                  |
+| Brazil                   |
+| Canada                   |
+| Switzerland              |
+| China                    |
+| Germany                  |
+| Denmark                  |
+| Egypt                    |
+| France                   |
+| Israel                   |
+| India                    |
+| Italy                    |
+| Japan                    |
+| Kuwait                   |
+| Malaysia                 |
+| Mexico                   |
+| Nigeria                  |
+| Netherlands              |
+| Singapore                |
+| United Kingdom           |
+| United States of America |
+| Zambia                   |
+| Zimbabwe                 |
++--------------------------+
+25 rows in set (0.03 sec)
+
+mysql> select * from countries where region_id=1;
++------------+----------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME   | REGION_ID |
++------------+----------------+-----------+
+| BE         | Belgium        | 1         |
+| CH         | Switzerland    | 1         |
+| DE         | Germany        | 1         |
+| DK         | Denmark        | 1         |
+| FR         | France         | 1         |
+| IT         | Italy          | 1         |
+| NL         | Netherlands    | 1         |
+| UK         | United Kingdom | 1         |
++------------+----------------+-----------+
+8 rows in set (0.04 sec)
+
+mysql> select * from countries order by region_id,country_name;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| BE         | Belgium                  | 1         |
+| DK         | Denmark                  | 1         |
+| FR         | France                   | 1         |
+| DE         | Germany                  | 1         |
+| IT         | Italy                    | 1         |
+| NL         | Netherlands              | 1         |
+| CH         | Switzerland              | 1         |
+| UK         | United Kingdom           | 1         |
+| AR         | Argentina                | 2         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| MX         | Mexico                   | 2         |
+| US         | United States of America | 2         |
+| AU         | Australia                | 3         |
+| CN         | China                    | 3         |
+| IN         | India                    | 3         |
+| JP         | Japan                    | 3         |
+| ML         | Malaysia                 | 3         |
+| SG         | Singapore                | 3         |
+| EG         | Egypt                    | 4         |
+| IL         | Israel                   | 4         |
+| KW         | Kuwait                   | 4         |
+| NG         | Nigeria                  | 4         |
+| ZM         | Zambia                   | 4         |
+| ZW         | Zimbabwe                 | 4         |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select country_name from countries order by country_name limit 8,4;
++--------------+
+| country_name |
++--------------+
+| France       |
+| Germany      |
+| India        |
+| Israel       |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from countries order by country_name limit 8,4;
++------------+--------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME | REGION_ID |
++------------+--------------+-----------+
+| FR         | France       | 1         |
+| DE         | Germany      | 1         |
+| IN         | India        | 3         |
+| IL         | Israel       | 4         |
++------------+--------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select country_name, count(country_name) from countries group by country_name with rollup;
++--------------------------+---------------------+
+| country_name             | count(country_name) |
++--------------------------+---------------------+
+| Argentina                |                   1 |
+| Australia                |                   1 |
+| Belgium                  |                   1 |
+| Brazil                   |                   1 |
+| Canada                   |                   1 |
+| China                    |                   1 |
+| Denmark                  |                   1 |
+| Egypt                    |                   1 |
+| France                   |                   1 |
+| Germany                  |                   1 |
+| India                    |                   1 |
+| Israel                   |                   1 |
+| Italy                    |                   1 |
+| Japan                    |                   1 |
+| Kuwait                   |                   1 |
+| Malaysia                 |                   1 |
+| Mexico                   |                   1 |
+| Netherlands              |                   1 |
+| Nigeria                  |                   1 |
+| Singapore                |                   1 |
+| Switzerland              |                   1 |
+| United Kingdom           |                   1 |
+| United States of America |                   1 |
+| Zambia                   |                   1 |
+| Zimbabwe                 |                   1 |
+| NULL                     |                  25 |
++--------------------------+---------------------+
+26 rows in set (0.04 sec)
+
+mysql> select * from locations;
++-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+| LOCATION_ID | STREET_ADDRESS                           | POSTAL_CODE | CITY                | STATE_PROVINCE    | COUNTRY_ID |
++-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+| 1000        | 1297 Via Cola di Rie                     | 00989       | Roma                |                   | IT         |
+| 1100        | 93091 Calle della Testa                  | 10934       | Venice              |                   | IT         |
+| 1200        | 2017 Shinjuku-ku                         | 1689        | Tokyo               | Tokyo Prefecture  | JP         |
+| 1300        | 9450 Kamiya-cho                          | 6823        | Hiroshima           |                   | JP         |
+| 1400        | 2014 Jabberwocky Rd                      | 26192       | Southlake           | Texas             | US         |
+| 1500        | 2011 Interiors Blvd                      | 99236       | South San Francisco | California        | US         |
+| 1600        | 2007 Zagora St                           | 50090       | South Brunswick     | New Jersey        | US         |
+| 1700        | 2004 Charade Rd                          | 98199       | Seattle             | Washington        | US         |
+| 1800        | 147 Spadina Ave                          | M5V 2L7     | Toronto             | Ontario           | CA         |
+| 1900        | 6092 Boxwood St                          | YSW 9T2     | Whitehorse          | Yukon             | CA         |
+| 2000        | 40-5-12 Laogianggen                      | 190518      | Beijing             |                   | CN         |
+| 2100        | 1298 Vileparle (E)                       | 490231      | Bombay              | Maharashtra       | IN         |
+| 2200        | 12-98 Victoria Street                    | 2901        | Sydney              | New South Wales   | AU         |
+| 2300        | 198 Clementi North                       | 540198      | Singapore           |                   | SG         |
+| 2400        | 8204 Arthur St                           |             | London              |                   | UK         |
+| 2500        | Magdalen Centre, The Oxford Science Park | OX9 9ZB     | Oxford              | Oxford            | UK         |
+| 2600        | 9702 Chester Road                        | 09629850293 | Stretford           | Manchester        | UK         |
+| 2700        | Schwanthalerstr. 7031                    | 80925       | Munich              | Bavaria           | DE         |
+| 2800        | Rua Frei Caneca 1360                     | 01307-002   | Sao Paulo           | Sao Paulo         | BR         |
+| 2900        | 20 Rue des Corps-Saints                  | 1730        | Geneva              | Geneve            | CH         |
+| 3000        | Murtenstrasse 921                        | 3095        | Bern                | BE                | CH         |
+| 3100        | Pieter Breughelstraat 837                | 3029SK      | Utrecht             | Utrecht           | NL         |
+| 3200        | Mariano Escobedo 9991                    | 11932       | Mexico City         | Distrito Federal, | MX         |
++-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+23 rows in set (0.00 sec)
+
+mysql> select * from countries left join locations on countries.country_id=locations.country_id;
++------------+--------------------------+-----------+-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID | LOCATION_ID | STREET_ADDRESS                           | POSTAL_CODE | CITY                | STATE_PROVINCE    | COUNTRY_ID |
++------------+--------------------------+-----------+-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+| IT         | Italy                    | 1         | 1000        | 1297 Via Cola di Rie                     | 00989       | Roma                |                   | IT         |
+| IT         | Italy                    | 1         | 1100        | 93091 Calle della Testa                  | 10934       | Venice              |                   | IT         |
+| JP         | Japan                    | 3         | 1200        | 2017 Shinjuku-ku                         | 1689        | Tokyo               | Tokyo Prefecture  | JP         |
+| JP         | Japan                    | 3         | 1300        | 9450 Kamiya-cho                          | 6823        | Hiroshima           |                   | JP         |
+| US         | United States of America | 2         | 1400        | 2014 Jabberwocky Rd                      | 26192       | Southlake           | Texas             | US         |
+| US         | United States of America | 2         | 1500        | 2011 Interiors Blvd                      | 99236       | South San Francisco | California        | US         |
+| US         | United States of America | 2         | 1600        | 2007 Zagora St                           | 50090       | South Brunswick     | New Jersey        | US         |
+| US         | United States of America | 2         | 1700        | 2004 Charade Rd                          | 98199       | Seattle             | Washington        | US         |
+| CA         | Canada                   | 2         | 1800        | 147 Spadina Ave                          | M5V 2L7     | Toronto             | Ontario           | CA         |
+| CA         | Canada                   | 2         | 1900        | 6092 Boxwood St                          | YSW 9T2     | Whitehorse          | Yukon             | CA         |
+| CN         | China                    | 3         | 2000        | 40-5-12 Laogianggen                      | 190518      | Beijing             |                   | CN         |
+| IN         | India                    | 3         | 2100        | 1298 Vileparle (E)                       | 490231      | Bombay              | Maharashtra       | IN         |
+| AU         | Australia                | 3         | 2200        | 12-98 Victoria Street                    | 2901        | Sydney              | New South Wales   | AU         |
+| SG         | Singapore                | 3         | 2300        | 198 Clementi North                       | 540198      | Singapore           |                   | SG         |
+| UK         | United Kingdom           | 1         | 2400        | 8204 Arthur St                           |             | London              |                   | UK         |
+| UK         | United Kingdom           | 1         | 2500        | Magdalen Centre, The Oxford Science Park | OX9 9ZB     | Oxford              | Oxford            | UK         |
+| UK         | United Kingdom           | 1         | 2600        | 9702 Chester Road                        | 09629850293 | Stretford           | Manchester        | UK         |
+| DE         | Germany                  | 1         | 2700        | Schwanthalerstr. 7031                    | 80925       | Munich              | Bavaria           | DE         |
+| BR         | Brazil                   | 2         | 2800        | Rua Frei Caneca 1360                     | 01307-002   | Sao Paulo           | Sao Paulo         | BR         |
+| CH         | Switzerland              | 1         | 2900        | 20 Rue des Corps-Saints                  | 1730        | Geneva              | Geneve            | CH         |
+| CH         | Switzerland              | 1         | 3000        | Murtenstrasse 921                        | 3095        | Bern                | BE                | CH         |
+| NL         | Netherlands              | 1         | 3100        | Pieter Breughelstraat 837                | 3029SK      | Utrecht             | Utrecht           | NL         |
+| MX         | Mexico                   | 2         | 3200        | Mariano Escobedo 9991                    | 11932       | Mexico City         | Distrito Federal, | MX         |
+| AR         | Argentina                | 2         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| BE         | Belgium                  | 1         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| DK         | Denmark                  | 1         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| EG         | Egypt                    | 4         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| FR         | France                   | 1         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| IL         | Israel                   | 4         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| KW         | Kuwait                   | 4         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| ML         | Malaysia                 | 3         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| NG         | Nigeria                  | 4         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| ZM         | Zambia                   | 4         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
+| ZW         | Zimbabwe                 | 4         | NULL        | NULL                                     | NULL        | NULL                | NULL              | NULL       |
++------------+--------------------------+-----------+-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+34 rows in set (0.00 sec)
+
+mysql> select * from countries where countries.country_id in(select region_id from locations);
+Empty set (0.04 sec)
+
+mysql> select * from countries where exists (select region_id from locations where region_id=1);
++------------+----------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME   | REGION_ID |
++------------+----------------+-----------+
+| BE         | Belgium        | 1         |
+| CH         | Switzerland    | 1         |
+| DE         | Germany        | 1         |
+| DK         | Denmark        | 1         |
+| FR         | France         | 1         |
+| IT         | Italy          | 1         |
+| NL         | Netherlands    | 1         |
+| UK         | United Kingdom | 1         |
++------------+----------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from countries where exists (select region_id from locations where region_id=0);
+Empty set (0.00 sec)
+
+mysql> select country_id from countries union all select country_id from locations;
++------------+
+| country_id |
++------------+
+| AR         |
+| AU         |
+| BE         |
+| BR         |
+| CA         |
+| CH         |
+| CN         |
+| DE         |
+| DK         |
+| EG         |
+| FR         |
+| IL         |
+| IN         |
+| IT         |
+| JP         |
+| KW         |
+| ML         |
+| MX         |
+| NG         |
+| NL         |
+| SG         |
+| UK         |
+| US         |
+| ZM         |
+| ZW         |
+| IT         |
+| IT         |
+| JP         |
+| JP         |
+| US         |
+| US         |
+| US         |
+| US         |
+| CA         |
+| CA         |
+| CN         |
+| IN         |
+| AU         |
+| SG         |
+| UK         |
+| UK         |
+| UK         |
+| DE         |
+| BR         |
+| CH         |
+| CH         |
+| NL         |
+| MX         |
++------------+
+48 rows in set (0.00 sec)
+
